@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.menu {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.box1 {
+    width: 100%;
+    height: 15%;
+    background-color: #1CFBD3;
+    color: #607E72;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 40px;
+}
+
+.box2 {
+    width: 100%;
+    height: 85%;
+}

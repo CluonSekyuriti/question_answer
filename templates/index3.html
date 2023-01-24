@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="../static/css/style3.css">
+    <title>Settings</title>
+{% endblock %}
+{% block body %}
+    <div class="box2">
+        <div class="box2__item1">
+            <div class="box">
+                <div class="box__item1">
+                    <img src="" alt="Rasm mavjud emas">
+                    <p>Nomini yozing</p>
+                </div>
+                <div class="box__item2">
+                    <p>Narhini balgilang</p>
+                    <div class="box__time2">
+                        <div class="box__time2__item1">
+                            <p>1</p>
+                        </div>
+                        <div class="box__time2__item2">
+                            <img src="../static/rasmlar/Polygon%201.png" alt="">
+                            <img src="../static/rasmlar/Polygon%203.png" alt="">
+                        </div>
+                    </div>
+                    <button>Buyurtma berish</button>
+                </div>
+            </div>
+        </div>
+        <div class="box2__item2">
+            <div class="box2__item2__time1">
+                <p>Rasimni kiriting</p>
+                <input type="file">
+            </div>
+            <div class="box2__item2__time2">
+                <p>Nomini yozing</p>
+                <input class="input" type="text" placeholder="Nomini yozish uchun bosing">
+            </div>
+            <div class="box2__item2__time3">
+                <p>Narhni belgilang</p>
+                <input class="input" type="text" placeholder="Narhini belgilash uchun bosing">
+            </div>
+        </div>
+    </div>
+{% endblock %}

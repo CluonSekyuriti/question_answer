@@ -69,7 +69,5 @@ def delet_product(product_id):
 
     return redirect(url_for('home'))
 
-Je vous aime
-
 if __name__ == '__main__':
     app.run()

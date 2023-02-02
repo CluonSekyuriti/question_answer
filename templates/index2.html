@@ -6,7 +6,7 @@
 {% block body %}
     <div class="box2">
         <div class="box2__item1">
-            <p>AIKO IZZI Диван раскладной</p>
+            <p>{{ product_info.name }}</p>
         </div>
         <div class="box2__item2">
             <div class="box2__item2__time1">
@@ -14,7 +14,7 @@
             </div>
             <div class="box2__item2__time2">
                 <div class="box1">
-                    <p>Narhi: 2 250 000 sum</p>
+                    <p>Narhi: {{ product_info.price }} sum</p>
                 </div>
                 <div class="box2">
                     <p>Malumot:</p>
@@ -29,7 +29,15 @@
                             <img src="../static/rasmlar/Polygon%203.png" alt="">
                         </div>
                     </div>
-                    <button>Buyurtma berish</button>
+                    <div class="box3__item2">
+                        <button>Buyurtma berish</button>
+                        <button>O’zgartirish</button>
+                    </div>
+                    <div class="box3__item3">
+                        <button>
+                            <a href="{{ url_for('delet_product', product_id=product_info.id) }}">Mahsulotmi o’chirish</a>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,46 +4,21 @@
     <title>Settings</title>
 {% endblock %}
 {% block body %}
+
     <div class="box2">
-        <div class="box2__item1">
-            <div class="box">
-                <div class="box__item1">
-                    <img src="" alt="Rasm mavjud emas">
-                    <p>Nomini yozing</p>
-                </div>
-                <div class="box__item2">
-                    <p>Narhini balgilang</p>
-                    <div class="box__time2">
-                        <div class="box__time2__item1">
-                            <p>1</p>
-                        </div>
-                        <div class="box__time2__item2">
-                            <img src="../static/rasmlar/Polygon%201.png" alt="">
-                            <img src="../static/rasmlar/Polygon%203.png" alt="">
-                        </div>
+        <div class="box2__item">
+            {% for user in users %}
+                <div class="box2__item__time1">
+                    <div class="box2__item__time1__div1">
+                        <p>User: {{ user.username }}</p>
                     </div>
-                    <button>Buyurtma berish</button>
+                    <div class="box2__item__time1__div2">
+                        <button {% if user.teacher == True %}style="background-color: #938F8FFF; color: white;" {% endif %}><a href="{{ url_for("add_teacher", user_id=user.id) }}">Teacher</a></button>
+                        <button {% if user.student == True %}style="background-color: #938F8FFF; color: white;" {% endif %}><a href="{{ url_for("add_student", user_id=user.id) }}">Student</a></button>
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-        <form action="{{ url_for('register_product') }}" method="post">
-            <div class="box2__item2">
-                <div class="box2__item2__time1">
-                    <p>Rasimni kiriting</p>
-                    <input type="file">
-                </div>
-                <div class="box2__item2__time2">
-                    <p>Nomini yozing</p>
-                    <input class="input" type="text" name="product_name" placeholder="Nomini yozish uchun bosing">
-                </div>
-                <div class="box2__item2__time3">
-                    <p>Narhni belgilang</p>
-                    <input class="input" type="text" name="product_price" placeholder="Narhini belgilash uchun bosing">
-                </div>
-                <div class="box2__item2__time4">
-                    <button>Yuborish</button>
-                </div>
-            </div>
-        </form>
     </div>
+
 {% endblock %}

@@ -1,73 +1,156 @@
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
+from werkzeug.utils import secure_filename
+import os
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost/shop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['UPLOAD_FOLDER'] = 'static/product_img'
+app.config['SECRET_KEY'] = "ajbfsgnhnegrb"
 db = SQLAlchemy(app)
 
 
-class Product(db.Model):
+class User(db.Model):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    price = Column(Integer)
-    img_url = Column(String)
+    username = Column(String)
+    password = Column(String)
+    admin = Column(Boolean)
+    teacher = Column(Boolean)
+    student = Column(Boolean)
+
+
+class Question(db.Model):
+    __tablename__ = 'question'
+    id = Column(Integer, primary_key=True)
+    question_text = Column(String)
+    answer_text = Column(String)
+    teacher_id = Column(Integer)
+    student_id = Column(Integer, ForeignKey('user.id'))
 
 
 with app.app_context():
     db.create_all()
 
 
-@app.route('/')
+def get_current_user():
+    user_result = None
+    if "username" in session:
+        user_result = User.query.filter(User.username == session['username']).first()
+    return user_result
+
+
+@app.route('/logout')
+def logout():
+    session['username'] = None
+    return redirect(url_for('login'))
+
+
+@app.route('/register_user', methods=['POST', 'GET'])
+def register_user():
+    user = get_current_user()
+    if request.method == "POST":
+        user_name = request.form.get('user_name')
+        user_password = request.form.get('user_password')
+        hashed_password = generate_password_hash(user_password, method="sha256")
+        add = User(username=user_name, password=hashed_password, student=True)
+        db.session.add(add)
+        db.session.commit()
+        return redirect(url_for('login'))
+
+    return render_template('index5.html', user=user)
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == "POST":
+        user_name = request.form.get('user_name')
+        user_password = request.form.get('user_password')
+        get_user = User.query.filter(User.username == user_name).first()
+        if get_user:
+            checked = check_password_hash(get_user.password, user_password)
+            session['username'] = user_name
+            if checked:
+                return redirect(url_for('home'))
+            else:
+                return redirect(url_for('login'))
+    return render_template('index5.html')
+
+
+@app.route('/', methods=['POST', 'GET'])
 def home():
-    # name = "apple"
-    # price = 5
-    # new_product = Product(name=name, price=price)
-    # db.session.add(new_product)
-    # db.session.commit()
-    # Product.query.filter(Product.id == 1).update({
-    #     "name": "Ananas",
-    #     "price": 6,
-    # })
-    # Product.query.filter(Product.id == 1).delete()
-    # db.session.commit()
-    products = Product.query.order_by(Product.id).all()
-    return render_template('index1.html', products=products)
+    user = get_current_user()
+    return render_template('index1.html', user=user)
 
 
-@app.route('/product/<int:product_id>')
-def product(product_id):
-    product_info = Product.query.filter(Product.id == product_id).first()
-    return render_template('index2.html', product_info=product_info)
+@app.route('/add_teacher/<int:user_id>')
+def add_teacher(user_id):
+    user_info = User.query.filter(User.id == user_id).first()
+    if user_info.teacher == True:
+        User.query.filter(User.id == user_id).update({
+            "teacher": False,
+            "student": False
+        })
+    else:
+        User.query.filter(User.id == user_id).update({
+            "teacher": True,
+            "student": False
+        })
+    db.session.commit()
+    return redirect(url_for('settings', user_info=user_info))
+
+
+@app.route('/add_student/<int:user_id>')
+def add_student(user_id):
+    user_info = User.query.filter(User.id == user_id).first()
+    if user_info.student == True:
+        User.query.filter(User.id == user_id).update({
+            "student": False,
+            "teacher": False
+        })
+    else:
+        User.query.filter(User.id == user_id).update({
+            "student": True,
+            "teacher": False
+        })
+    db.session.commit()
+    return redirect(url_for('settings', user_info=user_info))
+
+
+@app.route('/questionlist')
+def questionlist():
+    user = get_current_user()
+    return render_template('index11.html', user=user)
+
+
+@app.route('/question', methods=['POST', 'GET'])
+def question():
+    user = get_current_user()
+    teachers = User.query.filter(User.teacher == True).order_by(User.id).all()
+    return render_template('index2.html', user=user, teachers=teachers)
 
 
 @app.route('/settings')
 def settings():
-    return render_template('index3.html')
+    user = get_current_user()
+    users = User.query.order_by(User.id).all()
+    return render_template('index3.html', users=users, user=user)
 
 
 @app.route('/change')
 def change():
-    return render_template('index4.html')
+    user = get_current_user()
+    return render_template('index4.html', user=user)
 
 
-@app.route('/register_product', methods=["POST"])
-def register_product():
-    product_name = request.form.get('product_name')
-    product_price = int(request.form.get('product_price'))
-    add = Product(name=product_name, price=product_price)
-    db.session.add(add)
-    db.session.commit()
-    return redirect(url_for('home'))
+@app.route('/change2')
+def change2():
+    user = get_current_user()
+    return render_template('index44.html', user=user)
 
-
-@app.route('/delet_product/<int:product_id>')
-def delet_product(product_id):
-    Product.query.filter(Product.id == product_id).delete()
-    db.session.commit()
-
-    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run()

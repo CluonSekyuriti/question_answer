@@ -15,7 +15,8 @@ a {
     align-items: center;
     justify-content: center;
 }
-.box2__item{
+
+.box2__item {
     width: 90%;
     height: 90%;
     background-color: #F2F0ED;
@@ -26,40 +27,42 @@ a {
     align-items: center;
     justify-content: center;
 }
-.box2__item__time1{
+
+.box2__item__time1 {
     width: 98%;
-    height: 35%;
+    height: 25%;
     font-size: 47px;
     color: #807E7A;
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
 }
-.box2__item__time1 select{
-    width: 530px;
+
+.box2__item__time1 div {
+    width: 270px;
     height: 100px;
-    padding: 20px;
     background-color: #DEDDDD;
     border-radius: 30px;
-    color: #9A968F;
+    color: #807E7A;
     font-size: 32px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     border: none;
 
 }
-.box2__item__time2{
+
+.box2__item__time2 {
     width: 98%;
-    height: 65%;
+    height: 75%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.box2__item__time2__div1{
-    width: 70%;
+
+.box2__item__time2__div1 {
+    width: 50%;
     height: 100%;
     font-size: 40px;
     color: #807E7A;
@@ -68,8 +71,20 @@ a {
     align-items: flex-start;
     justify-content: space-around;
 }
-.box2__item__time2__div1 textarea{
-    width: 900px;
+
+.box2__item__time2__div3 {
+    width: 40%;
+    height: 100%;
+    font-size: 40px;
+    color: #807E7A;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+textarea {
+    width: 615px;
     height: 300px;
     padding: 20px;
     background-color: #DEDDDD;
@@ -81,14 +96,17 @@ a {
     align-items: flex-start;
     justify-content: flex-start;
 }
-.box2__item__time2__div2{
-    width: 30%;
+
+.box2__item__time2__div2 {
+    width: 50%;
     height: 100%;
+    padding: 30px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
 }
-.box2__item__time2__div2 button{
+
+.box2__item__time2__div2 button {
     width: 280px;
     height: 100px;
     background-color: #D9D9D9;

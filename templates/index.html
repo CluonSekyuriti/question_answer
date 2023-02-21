@@ -13,10 +13,27 @@
 <body>
 <div class="menu">
     <div class="box1">
-        <p><a href="{{ url_for("home") }}">Home</a></p>
-        <p><a href="">About</a></p>
-        <p><a href="">Admin</a></p>
-        <p><a href="{{ url_for("settings") }}">Settings</a></p>
+        {% if user.teacher or user.admin or user.student %}
+            <p><a href="{{ url_for("home") }}">Home</a></p>
+        {% endif %}
+        {% if user.student or user.admin %}
+            <p><a href="{{ url_for("question") }}">Question</a></p>
+        {% endif %}
+        {% if user.student or user.admin %}
+            <p><a href="{{ url_for("questionlist") }}">Answer</a></p>
+        {% endif %}
+        {% if user.admin %}
+            <p><a href="{{ url_for("settings") }}">Settings</a></p>
+        {% endif %}
+        {% if user.teacher or user.admin %}
+            <p><a href="{{ url_for("change") }}">Change</a></p>
+        {% endif %}
+{#        {% if user.teacher or user.admin %}#}
+{#            <p><a href="{{ url_for("change2") }}">Know Change</a></p>#}
+{#        {% endif %}#}
+        {% if user.teacher or user.admin or user.student %}
+            <p><a href="{{ url_for("register_user") }}">Register</a></p>
+        {% endif %}
     </div>
     {% block body %}
 

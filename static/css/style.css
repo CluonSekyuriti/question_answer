@@ -7,6 +7,7 @@
 .menu {
     width: 100%;
     height: 100vh;
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,16 +16,22 @@
 
 .box1 {
     width: 100%;
-    height: 15%;
-    background-color: #1CFBD3;
+    height: 13%;
+    background-color: #F2F0ED;
     color: #607E72;
+    box-shadow: 0 0 10px 2px #C8C4BE;
     display: flex;
     align-items: center;
     justify-content: space-around;
     font-size: 40px;
+    border-radius: 0 0 25px 25px;
 }
 
 .box2 {
     width: 100%;
-    height: 85%;
+    height: 87%;
+}
+
+a {
+    text-decoration: none;
 }
